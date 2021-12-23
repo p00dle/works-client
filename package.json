@@ -1,0 +1,36 @@
+{
+  "name": "works-client",
+  "version": "0.1.0",
+  "description": "Client libraries for works backend",
+  "main": "index.js",
+  "author": "Krzysztof Siuda",
+  "license": "UNLICENSED",
+  "private": true,
+  "devDependencies": {
+    "@fortawesome/fontawesome-common-types": "^0.2.36",
+    "@types/file-saver": "^2.0.4",
+    "@types/node": "^16.11.12",
+    "@types/react": "^17.0.37",
+    "@types/react-datepicker": "^4.3.2",
+    "@types/react-dom": "^17.0.11",
+    "autoprefixer": "^10.4.0",
+    "npm-run-all": "^4.1.5",
+    "parcel": "^2.0.1",
+    "postcss": "^8.4.4",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^3.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.24.0",
+    "file-saver": "^2.0.5",
+    "react": "^17.0.2",
+    "react-datepicker": "^4.5.0",
+    "react-dom": "^17.0.2",
+    "react-query": "^3.34.1"
+  },
+  "scripts": {
+    "start": "npm-run-all --parallel watch:*",
+    "watch:parcel": "parcel serve ./index.html",
+    "watch:css": "tailwindcss -i ./tailwind.css -o ./styles.css -w"
+  }
+}

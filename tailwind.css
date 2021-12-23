@@ -1,0 +1,136 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'CiscoSans Regular';
+  src:
+    url('./fonts/CiscoSansTTRegular.woff2') format('woff2'), 
+    url('./fonts/CiscoSansTTRegular.woff') format('woff');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'CiscoSans Thin';
+  src: 
+    url('./fonts/CiscoSansTTThin.woff') format('woff'),
+    url('./fonts/CiscoSansTTThin.woff2') format('woff2');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'CiscoSans Light';
+  src: 
+    url('./fonts/CiscoSansTTLight.woff') format('woff'),
+    url('./fonts/CiscoSansTTLight.woff2') format('woff2');
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: 'CiscoSans Bold';
+  src: 
+    url('./fonts/CiscoSansTTBold.woff') format('woff'),
+    url('./fonts/CiscoSansTTBold.woff2') format('woff2');
+  font-weight: normal;
+}
+
+@layer base {
+  html {
+    font-family: 'CiscoSans Regular', sans-serif;
+    font-size: 16px;
+    box-sizing: content-box;
+  }
+}
+
+
+@layer components {
+  .form-control {
+    @apply    rounded-md px-2 h-8 bg-stone-50 border-2 border-stone-400 w-full;
+  }
+
+ .form-control:disabled {
+    @apply  bg-stone-200;
+  }
+  
+  textarea.form-control {
+    @apply    h-20
+  }
+
+
+  .btn {
+    @apply    rounded-lg border-2 h-8 px-2 cursor-pointer transition-all
+            border-stone-400 bg-stone-50 hover:border-sky-400 hover:bg-sky-300
+  } 
+
+  div.react-datepicker {
+  font-family: 'CiscoSans Regular', sans-serif;
+  font-weight: normal;
+  @apply rounded-b-none border-stone-500;
+  box-sizing: content-box;
+}
+
+  div.react-datepicker__day--selected {
+    @apply bg-sky-500 border-sky-600 rounded-sm !important;
+  }
+
+}
+
+@layer utilities {
+  .sidebar {
+    @apply  text-emerald-50 bg-emerald-700
+            dark:text-emerald-500 dark:bg-stone-700
+            fill-emerald-50 stroke-emerald-50
+  }
+
+  .primary {
+    @apply  text-stone-700 bg-stone-200 border-stone-500
+            dark:text-emerald-200 dark:bg-stone-900
+  }
+
+  .secondary {
+    @apply  bg-stone-50 border-stone-500 
+  }
+
+  .tertiary {
+    @apply bg-stone-500 text-white border-stone-600;
+  }
+  
+  .btn-primary {
+    @apply  border-sky-600 bg-sky-500 text-white 
+            hover:border-sky-500 hover:bg-sky-400
+            dark:border-stone-500 dark:text-emerald-500 dark:bg-stone-700
+            dark:hover:border-stone-400 dark:hover:bg-stone-600
+  }
+
+  .caption-side-bottom {
+    caption-side: bottom;
+  }
+
+  .arrow {
+    position: relative;
+  }
+
+  .arrow:after {
+    display: inline-block;
+    position: absolute;
+    right: 0.5rem;
+    font-size: 1.2em;
+  }
+
+  .arrow-up {
+    @apply arrow;
+  }
+  .arrow-up:after {
+    content: '\25B2';
+  }
+
+  .arrow-down {
+    @apply arrow;
+  }
+
+  .arrow-down:after {
+    content: '\25BC';
+  }
+
+}
+
