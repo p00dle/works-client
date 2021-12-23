@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" type="image/png" href="../assets/favicon.ico">
+  <link href="../styles.css" rel="stylesheet">
+  <script src="../common.js"></script>
+  <title>CHANGE_ME</title>
+</head>
+<body>
+  <noscript>
+    Javascript is required to run this application
+  </noscript>
+  <div class="absolute w-screen top-0 left-0 h-16 flex items-center justify-center">
+    <div id="message" class="rounded-xl p-4 text-stone-50 transition-all"></div>
+  </div>
+  <div class="primary w-screen h-screen flex items-center justify-center">
+    <div class="secondary rounded-lg border-2">
+      <div class="tertiary text-2xl font-extrabold h-12 flex items-center justify-center">LOGIN</div>
+      <form class="grid grid-cols-2 gap-y-4 p-4" method="POST" action="/api/account/login">
+        <label for="username" class="pr-4 flex flex-row-reverse items-center">USERNAME</label>
+        <input type="text" id="username" name="username" class="form-control" />
+        <label for="password" class="pr-4 flex flex-row-reverse items-center">PASSWORD</label>
+        <input type="password" id="password" name="password" class="form-control" />
+        <label></label> 
+        <input type="submit" class="btn btn-primary" value="SUBMIT">
+      </form>
+      <div class="flex flex-row-reverse pr-4 mt-12">
+        <a href="/password-reset-request" class="underline">Forgot my username or password</a>
+      </div>
+    </div>
+  </div>
+  <script>
+    onDomReady(() => {
+      const searchParams = getSearchParams();
+      $('form').addEventListener('submit', submitForm((success) => {
+        if (success) {
+          window.location.replace(searchParams.redirect || '/');
+        } else {
+          showMessage('Invalid username or password', true);
+        }
+      }));
+      if (searchParams.message) {
+        showMessage(searchParams.message);
+      }
+    });
+
+  </script>
+</body>
+</html>

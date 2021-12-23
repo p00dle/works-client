@@ -1,5 +1,8 @@
 module.exports = {
-  content: ["./components/**/*.tsx"],
+  content: [
+    "./components/**/*.tsx",
+    "./static/*.*"
+  ],
   darkMode: 'class',
   theme: {
     extend: {
