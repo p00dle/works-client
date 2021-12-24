@@ -10,19 +10,29 @@ import { Table, TableColumns } from '~/components/_common/Table';
 import { format } from '~/lib/format';
 import { User, userRoles } from '~/types/user';
 import { useConfirmModal } from '~/components/_common/ConfirmModal';
+import { useInfoModal } from '~/components/_common/InfoModal';
 
 
 const EditUserModal: React.FC<{props: User}> = function EditUserModal({props: user}) {
   const updateUser = useUpdateUser();
+  const showInfoModal = useInfoModal();
+  function onSubmit(user: User) {
+    updateUser.mutate(user, {
+      onSuccess: () => showInfoModal({type: 'success', text: `User ${user.username} updated successfully`}),
+      onError: (error) => showInfoModal({type: 'error', text: `Error updating user ${user.username}: ${String(error)}`})
+    })
+  }
   return (
-    <Form onSubmit={(user: User) => updateUser.mutate(user) }>
-      <Input type="string" readOnly prop="username" initialValue={user.username} />
-      <Input type="string" prop="fullName" initialValue={user.fullName} />
-      <Input type="enum" values={userRoles} prop="role" initialValue={user.role} />
-      <Input type="string" prop="managerId" initialValue={user.managerId} />
-      <Input type="email" prop="email" initialValue={user.email} />
-      <Input type="submit" />
-    </Form>
+    <div className="p-4">
+      <Form onSubmit={onSubmit} >
+        <Input type="string" readOnly prop="username" initialValue={user.username} />
+        <Input type="string" prop="fullName" initialValue={user.fullName} />
+        <Input type="enum" values={userRoles} prop="role" initialValue={user.role} />
+        <Input type="string" prop="managerId" initialValue={user.managerId} />
+        <Input type="email" prop="email" initialValue={user.email} />
+        <Input type="submit" />
+      </Form>
+    </div>
   );
 }
 
@@ -35,8 +45,12 @@ const EditUser: React.FC<{user: User}> = function EditUser({user}) {
 
 const DeleteUser: React.FC<{user: User}> = function DeleteUser({user}) {
   const removeUser = useRemoveUser();
+  const showInfoModal = useInfoModal();
   const openModal = useConfirmModal(`Are you sure you want to remove user ${user.username}?`, () => {
-    removeUser.mutate({username: user.username});
+    removeUser.mutate({username: user.username}, {
+      onSuccess: () => showInfoModal({type: 'success', text: `User ${user.username} removed successfully`}),
+      onError: (error) => showInfoModal({type: 'error', text: `Error deleting user ${user.username}: ${String(error)}`})
+    });
   });
   return <Button onClick={openModal} className="text-sm">
     <Icon icon="trash-alt" />

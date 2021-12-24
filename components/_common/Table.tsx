@@ -363,7 +363,7 @@ export function Table<T>(props: TableProps<T>): JSX.Element {
                 <div className="grid grid-cols-[1fr_1rem] h-full">
                   <div>
                     <label>{h.label}</label>
-                    <div>
+                    <div className="h-8">
                       {h.filter === 'select'
                       ? (
                         <MultiSelect

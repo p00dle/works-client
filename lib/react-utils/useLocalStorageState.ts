@@ -16,7 +16,6 @@ function parseJsonWithDates(obj: any): any {
 function getLocalStorage<T = unknown>(key: string | null): T | null {
   if (key === null) return null;
   const output = localStorage.getItem(key);
-  console.log(parseJsonWithDates(JSON.parse(output || '')));
   return output === null ? output : parseJsonWithDates(JSON.parse(output));
 }
 

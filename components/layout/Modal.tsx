@@ -10,21 +10,21 @@ export type ModalProps<T> = {
 }
 
 interface ModalContextState {
-  title: string;
+  title: string | null;
   component: ModalComponent | null;
   shouldShow: boolean
   modalProps: any;
-  
-  showModal: <T>(title: string, component: ModalComponent<ModalProps<T>>, props?: T) => void;
+  modalClassName: string;
+  showModal: <T>(title: string | null, component: ModalComponent<ModalProps<T>>, props?: T, modalClassName?: string) => void;
   hideModal: () => void;
 }
 
 type ModalReducerAction = 
-  | { type: 'show-modal', payload: {component: ModalComponent, title?: string, modalProps?: any} }
+  | { type: 'show-modal', payload: {component: ModalComponent, title: string | null, modalProps?: any, modalClassName: string} }
   | { type: 'hide-modal' }
   | { type: 'update-result', payload: {modalResult: any}}
   | { type: 'update-functions', payload: {
-      showModal: (title: string, component: ModalComponent, props: any) => void;
+      showModal: (title: string, component: ModalComponent, props: any, modalClassName: string) => void;
       hideModal: () => void;
     }}
 ;
@@ -51,9 +51,10 @@ function modalReducer(state: ModalContextState, action: ModalReducerAction ): Mo
 }
 
 const initialModalContextState: ModalContextState = {
-  title: '',
+  title: null,
   component: null,
   modalProps: null,
+  modalClassName: '',
   shouldShow: false,
   showModal: () => void 0,
   hideModal: () => void 0,
@@ -61,14 +62,23 @@ const initialModalContextState: ModalContextState = {
 
 export const ModalContext = createContext<ModalContextState>(initialModalContextState);
 
-export function useModal<T>(title: string, component: ModalComponent<ModalProps<T>>, props?: T) {
+export function useModal<T>(title: string | null, component: ModalComponent<ModalProps<T>>, props?: T, modalClassName: string = '') {
   const context = useContext(ModalContext);
   if (context === undefined) {
     throw new Error('useModal must be used within a ModalProvider')
   }
   const { showModal } = context;
-  return () => {
-    showModal(title, component, props);
+  return (updatedProps?: T) => {
+    const isEvent = updatedProps && '_reactName' in updatedProps && 'target' in updatedProps;
+    const modalProps = isEvent
+      ? props
+      : updatedProps && props 
+        ? {...props, ...updatedProps} 
+        : updatedProps 
+          ? updatedProps 
+          : props;
+    console.log({updatedProps, props, modalProps});
+    showModal(title, component, modalProps, modalClassName);
   }
 }
 
@@ -78,8 +88,8 @@ export function useModal<T>(title: string, component: ModalComponent<ModalProps<
 export const ModalProvider: React.FC = function ModalProvider({children}) {
   const [state, dispatch] = useReducer(modalReducer, initialModalContextState);
   useEffect(() => {
-    function showModal(title: string, component: ModalComponent, modalProps?: any) {
-      dispatch({type: 'show-modal', payload: {title, component, modalProps}});
+    function showModal(title: string | null, component: ModalComponent, modalProps?: any, modalClassName = '' ) {
+      dispatch({type: 'show-modal', payload: {title, component, modalProps, modalClassName}});
     }
     function hideModal() {
       dispatch({type: 'hide-modal'})
@@ -94,18 +104,22 @@ export const ModalProvider: React.FC = function ModalProvider({children}) {
 }
 
 export const Modal: React.FC = function Modal() {
-  const { component: Component, shouldShow, modalProps, hideModal, title } = useContext(ModalContext);
+  const { component: Component, shouldShow, modalProps, hideModal, title, modalClassName } = useContext(ModalContext);
+  console.log({modalClassName});
   return (
     <React.Fragment>
-      <dialog className={"absolute h-screen opacity-30 bg-black w-screen top-0 left-0 z-30 " + (shouldShow ? "block": "hidden") } onClick={hideModal} />
-      <dialog className={"z-40 absolute top-[20vh] mx-auto left-0 right-0 rounded-lg p-0 border-2 primary border-inherit " + (shouldShow ? "block": "hidden")} >
-        <title className="tertiary text-lg p-4 rounded-t-sm flex">
-          <span className="grow" >{title}</span>
-          <div className="text-2xl cursor-pointer" onClick={hideModal}>
-            <Icon icon="window-close" />
-          </div>
-        </title>
-        <div className="p-4 rounded-b-lg">
+      <dialog className={"absolute h-screen opacity-30 dark:opacity-50 bg-black w-screen top-0 left-0 z-30 " + (shouldShow ? "block": "hidden") } onClick={hideModal} />
+      <dialog className={"z-40 absolute top-[20vh] mx-auto left-0 right-0 rounded-lg p-0 border-2 primary border-inherit " + (modalClassName || "") + (shouldShow ? " block": " hidden")} >
+        {title 
+          ? <title className="tertiary text-lg p-4 rounded-t-sm flex">
+            <span className="grow" >{title}</span>
+            <div className="text-2xl cursor-pointer" onClick={hideModal}>
+              <Icon icon="window-close" />
+            </div>
+          </title>
+          : null
+        }
+        <div className={"rounded-b-lg " + (title ? "" : "rounded-t-lg")}>
           {Component !== null ? <Component props={modalProps} hideModal={hideModal}  /> : null}
         </div>
       </dialog>

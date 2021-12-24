@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Button } from '~/components/_common/Button';
 import { useConfirmModal } from '~/components/_common/ConfirmModal';
-import { useErrorModal } from '~/components/_common/ErrorModal';
 import { FileUpload } from '~/components/_common/FileUpload';
 import { Form, Input } from '~/components/_common/Form';
+import { useInfoModal } from '~/components/_common/InfoModal';
 import { Section, useSectionState } from '~/components/_common/Section';
 import { Table, TableColumns } from '~/components/_common/Table';
 import { format } from '~/lib/format';
@@ -51,7 +51,8 @@ const TableSection: React.FC = function TableSection() {
 }
 
 export const Home: React.FC = function Home() {
-  const showError = useErrorModal('Sample error message');
+  const showError = useInfoModal('Something bad happened, good luck next time', 'error');
+  const showSuccess = useInfoModal('Somehow you managed not to screw things up!', 'success');
   const showConfirm = useConfirmModal('When clicked the listener in next argument will fire', () => console.log('Confirmed'));
 
   return (
@@ -92,6 +93,7 @@ export const Home: React.FC = function Home() {
 
       <Section title="MODALS" className="p-4 space-x-4">
         <Button onClick={showError}>ERROR</Button>
+        <Button onClick={showSuccess}>SUCCESS</Button>
         <Button onClick={showConfirm}>CONFIRM</Button>
       </Section>
 

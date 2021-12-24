@@ -1,14 +1,37 @@
 import * as React from 'react';
-import { ModalProps } from '~/components/layout/Modal'
+import { ModalProps, useModal } from '~/components/layout/Modal'
 import { Button } from '~/components/_common/Button';
 
-export const InfoModal: React.FC<ModalProps<{text: string}>> = function InfoModal({hideModal, props}) {
+type InfoModalType = 
+  | 'default'
+  | 'error'
+  | 'success'
+;
+
+interface InfoModalProps {
+  text: string;
+  type: InfoModalType;
+}
+
+
+const classesByType: Record<InfoModalType, string> = {
+  'default': '',
+  'error': 'error-message',
+  'success': 'success-message'
+}
+
+
+export const InfoModal: React.FC<ModalProps<InfoModalProps>> = function InfoModal({hideModal, props}) {
   return (
-    <div className="space-y-8">
-      <div>{props.text}</div>
+    <div className="space-y-8 p-4">
+      <div className={classesByType[props.type]}>{props.text}</div>
       <div className="">
         <Button className="btn-primary" onClick={hideModal}>DISMISS</Button>
       </div>
     </div>
   );
+}
+
+export function useInfoModal(text: string = '', type: InfoModalType = 'default') {
+  return useModal(null, InfoModal, {text, type});
 }

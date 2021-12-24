@@ -9,7 +9,7 @@ const ConfirmModal: React.FC<ModalProps<{text: string, onConfirm: () => void}>> 
     props.onConfirm();
   }
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-4">
       <div>{props.text}</div>
       <div className="flex justify-between">
         <Button className="btn-primary" onClick={confirm}>CONFIRM</Button>
@@ -20,5 +20,5 @@ const ConfirmModal: React.FC<ModalProps<{text: string, onConfirm: () => void}>> 
 }
 
 export function useConfirmModal(text: string, onConfirm: () => void) {
-  return useModal('CONFIRM', ConfirmModal, {text, onConfirm});
+  return useModal(null, ConfirmModal, {text, onConfirm});
 }

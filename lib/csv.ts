@@ -95,7 +95,6 @@ export function stringifyCsv<T>(arr: T[], columns?: CsvColumns<T>, options?: Par
   const { delimiter, quote, escapeQuote, ignoreUnderscoredProps, rowSeparator } = options ? {...defaultOptions, ...options} : defaultOptions;
   const quoteRegex = new RegExp(quote, 'g');
   const cols = Array.isArray(columns) ? columns : makeColumns(arr, ignoreUnderscoredProps);
-  console.log(cols);
   const headerRow = cols.map(col => col.label || col.prop).join(delimiter);
   const stringifyers = cols.map(col => col.type === 'custom' ? col.stringify || stringifyersByType[col.type] : stringifyersByType[col.type] );
   const width = cols.length;
