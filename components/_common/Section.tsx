@@ -62,11 +62,11 @@ const SectionControl: React.FC<SectionControlProps> = function SectionControl({v
   function getControl() {
     switch(control.type) {
       case 'multi-select': 
-        return <MultiSelect className="px-2 border-2 h-8 border-stone-600 border-t-0 rounded-b-md max-w-[12rem]" value={value} pool={control.pool} onChange={onChange} />
+        return <MultiSelect className="px-2 border-2 h-8 border-t-0 rounded-b-md rounded-t-none max-w-[12rem]" value={value} pool={control.pool} onChange={onChange} />
       case 'date':
-        return <DatePickerToday className="px-2 border-2 h-8 border-stone-600 border-t-0 rounded-b-md max-w-[12rem]" selected={value} onChange={onChange} />
+        return <DatePickerToday className="px-2 border-2 h-8  border-t-0 rounded-b-md rounded-t-none max-w-[12rem]" selected={value} onChange={onChange} />
       case 'select':
-        return <Select className="px-2 border-2 h-8 border-stone-600 border-t-0 rounded-b-md max-w-[12rem]" value={value} pool={control.pool} onChange={onChange} />
+        return <Select className="px-2 border-2 h-8 border-t-0 rounded-b-md rounded-t-none max-w-[12rem]" value={value} pool={control.pool} onChange={onChange} />
     }
   }
   return (
@@ -82,9 +82,9 @@ const SectionControl: React.FC<SectionControlProps> = function SectionControl({v
 
 export const Section = function Section<T extends Record<string, any>>({title, controls, children, className = '', state, setters, sectionClassName = '', exportData }: SectionProps<T>): JSX.Element {
   return (
-    <section className={"secondary border-2 rounded-xl " + sectionClassName} >
+    <section className={"secondary border-2 rounded-xl border-inherit" + sectionClassName} >
       {title || controls 
-        ? <title className={"flex items-center border-b-2 px-2 space-x-4 border-b-stone-600 " + (controls ? "h-24" : "h-16")} >
+        ? <title className={"flex items-center border-b-2 border-inherit px-2 space-x-4 " + (controls ? "h-24" : "h-16")} >
             { title ? <div className="text-xl grow">{title}</div> : null }
             { controls 
               ? (state && setters) 

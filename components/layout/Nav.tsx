@@ -95,17 +95,11 @@ function navReducer(state: {navLinks: NavLinkProps[], route: string}, action: Na
   }
 }
 
-const navLinkClass = "transition-all h-12 text-lg border-t-2 border-t-emerald-600 grid grid-cols-[2rem_1fr_1rem] px-2 items-center hover:bg-emerald-600 dark:hover:bg-slate-500 "
-
-const depth0NavLinkClass = "last:border-b-2 last:border-b-emerald-600"
-
-const selectedNavLinkClass = "text-white bg-emerald-500 dark:text-emerald-300 dark:bg-slate-600"
-
 const NavLink: React.FC<NavLinkProps & { toggleExpand: (name: string) => void, depth?: number }> = function NavLink({ name, route, routeParams, icon, subMenu, isExpanded, isSelected, toggleExpand, depth = 0 }) {
   if (route) {
     return (
-      <li className={depth ? '' : depth0NavLinkClass}>
-        <Link route={route} params={routeParams} className={navLinkClass + (isSelected ? selectedNavLinkClass : '')} >
+      <li className={depth ? "" : "last:border-b-2 border-inherit"}>
+        <Link route={route} params={routeParams} className={"transition-all h-12 text-lg border-t-2 border-inherit grid grid-cols-[2rem_1fr_1rem] px-2 items-center sidebar-hover " + (isSelected ? "sidebar-active" : '')} >
           {icon ? <Icon icon={icon} className="text-2xl w-10" /> : <div />}
           <span>{name}</span>
         </Link>
@@ -113,8 +107,8 @@ const NavLink: React.FC<NavLinkProps & { toggleExpand: (name: string) => void, d
     );
   } else if (Array.isArray(subMenu)) {
     return (
-      <li className={depth ? '' : depth0NavLinkClass}>
-        <div onClick={() => toggleExpand(name)} className={navLinkClass + "cursor-pointer"}>
+      <li className={depth ? "" : "last:border-b-2 border-inherit"}>
+        <div onClick={() => toggleExpand(name)} className={"transition-all h-12 text-lg border-t-2 border-inherit grid grid-cols-[2rem_1fr_1rem] px-2 items-center sidebar-hover cursor-pointer"}>
           {icon ? <Icon icon={icon} className="text-2xl w-10" /> : <div /> }
           <span>{name}</span>
           <span className="">{isExpanded ? '\u25BC' : '\u25B2'}</span>

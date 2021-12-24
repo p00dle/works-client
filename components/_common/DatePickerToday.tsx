@@ -10,19 +10,19 @@ interface DatePickerTodayProps {
 }
 
 export const DatePickerToday: React.FC<DatePickerTodayProps> = function DatePickerToday(
-  {className = 'form-control', selected, onChange, placeholderText}) {
+  {className = '', selected, onChange, placeholderText}) {
   return (
     <div>
       <DatePicker
-        className={className}
+        className={"form-control " + className}
         dateFormat="yyyy-MM-dd"
         selected={selected}
         onChange={onChange}
         placeholderText={placeholderText}>
-        <div className="h-8 flex absolute bottom-[-2rem] z-4 bg-inherit border-[1px] w-full left-[-1px] rounded-b-md border-stone-500 box-content">
+        <div className="h-8 flex absolute bottom-[-2rem] z-4 bg-inherit border-[1px] w-full left-[-1px] rounded-b-md secondary box-content">
 
-          <button className="block w-1/2 transition-all hover:bg-sky-500 border-r-[1px] border-r-stone-500" onClick={() => onChange(new Date())}>TODAY</button>
-          <button className="block w-1/2 transition-all hover:bg-sky-500 " onClick={() => onChange(null)}>CLEAR</button>
+          <button className="block w-1/2 transition-all secondary-hover border-r-[1px] " onClick={() => onChange(new Date())}>TODAY</button>
+          <button className="block w-1/2 transition-all secondary-hover " onClick={() => onChange(null)}>CLEAR</button>
         </div>
       </DatePicker>    
     </div>

@@ -40,66 +40,141 @@
     font-size: 16px;
     box-sizing: content-box;
   }
+  * {
+    border-color: inherit;
+  }
 }
 
 
 @layer components {
   .form-control {
-    @apply    rounded-md px-2 h-8 bg-stone-50 border-2 border-stone-400 w-full;
+    @apply    rounded-md px-2 h-8 w-full 
+            bg-stone-50 border-2 border-stone-400 
+              dark:bg-stone-900 dark:text-emerald-200 dark:border-stone-600
   }
 
  .form-control:disabled {
-    @apply  bg-stone-200;
+    @apply  bg-stone-200 dark:bg-stone-600;
   }
   
+  .form-control:active,
+  .form-control:focus {
+    @apply  outline-none shadow-[0px_0px_5px_0px] shadow-sky-500 dark:shadow-emerald-300;
+  }
+
   textarea.form-control {
     @apply    h-20
   }
 
+  input[type="checkbox"].form-control {
+    @apply appearance-none w-8 h-8 rounded-full relative;
+  }
 
-  .btn {
-    @apply    rounded-lg border-2 h-8 px-2 cursor-pointer transition-all
-            border-stone-400 bg-stone-50 hover:border-sky-400 hover:bg-sky-300
-  } 
+  input[type="checkbox"].form-control:checked:after {
+    @apply text-2xl absolute top-0 left-1;
+    content: '\2714';
+  }
 
-  div.react-datepicker {
-  font-family: 'CiscoSans Regular', sans-serif;
-  font-weight: normal;
-  @apply rounded-b-none border-stone-500;
-  box-sizing: content-box;
-}
 
-  div.react-datepicker__day--selected {
-    @apply bg-sky-500 border-sky-600 rounded-sm !important;
+  .react-datepicker {
+    @apply rounded-b-none secondary;
+    font-family: 'CiscoSans Regular', sans-serif;
+    font-weight: normal;
+    box-sizing: content-box;
+  }
+  
+  .react-datepicker .react-datepicker__header {
+    @apply tertiary;
+  }
+  
+  .react-datepicker .react-datepicker__day {
+    @apply secondary-hover rounded-md;
+  }
+
+  .react-datepicker .react-datepicker__day.react-datepicker__day--selected {
+    @apply secondary-active secondary-hover;
   }
 
 }
 
 @layer utilities {
   .sidebar {
-    @apply  text-emerald-50 bg-emerald-700
-            dark:text-emerald-500 dark:bg-stone-700
-            fill-emerald-50 stroke-emerald-50
+    @apply  text-emerald-50           bg-emerald-700          border-emerald-600
+            dark:text-emerald-500     dark:bg-stone-700       dark:border-stone-500
   }
-
+  .header {
+    @apply                              bg-emerald-300
+                                        dark:bg-stone-600
+  }
+  .sidebar-hover {
+    @apply                              hover:bg-emerald-600
+                                        dark:hover:bg-stone-500
+  }
+  .sidebar-active {
+    @apply  text-white                bg-emerald-500
+            dark:text-emerald-300     dark:bg-stone-600
+  }
   .primary {
-    @apply  text-stone-700 bg-stone-200 border-stone-500
-            dark:text-emerald-200 dark:bg-stone-900
+    @apply  text-stone-700            bg-stone-200            border-stone-500
+            dark:text-emerald-200     dark:bg-stone-900       dark:border-stone-600
   }
-
   .secondary {
-    @apply  bg-stone-50 border-stone-500 
+    @apply  text-stone-700            bg-stone-50             border-stone-500 
+            dark:text-emerald-300     dark:bg-stone-800       dark:border-stone-600
+  }
+  .secondary-hover {
+    @apply                              hover:bg-sky-300
+                                        dark:hover:bg-emerald-700
+  }
+  .secondary-active {
+    @apply                              bg-sky-400
+                                        dark:bg-emerald-500
+  }
+  .tertiary {
+    @apply text-white                 bg-stone-600            border-stone-700
+           dark:text-emerald-300      dark:bg-stone-700       dark:border-stone-700
   }
 
-  .tertiary {
-    @apply bg-stone-500 text-white border-stone-600;
+  .row-odd {
+    @apply  text-stone-700            bg-stone-200            border-stone-300
+            dark:text-emerald-400     dark:bg-stone-700       dark:border-stone-500
   }
-  
+  .row-even {
+    @apply  text-stone-700            bg-stone-100            border-stone-300
+            dark:text-emerald-400     dark:bg-stone-800       dark:border-stone-500
+  }
+
+  .btn {
+    @apply    rounded-lg border-2 h-8 px-2 cursor-pointer transition-all
+            text-stone-800            bg-stone-50             border-stone-400
+                                        hover:bg-sky-300        hover:border-sky-400
+            dark:text-emerald-200     dark:bg-stone-600       dark:border-stone-500
+                                        hover:dark:bg-stone-400 hover:dark:border-stone-300
+                                      
+  }
   .btn-primary {
     @apply  border-sky-600 bg-sky-500 text-white 
             hover:border-sky-500 hover:bg-sky-400
             dark:border-stone-500 dark:text-emerald-500 dark:bg-stone-700
             dark:hover:border-stone-400 dark:hover:bg-stone-600
+  }
+
+  .border-1 {
+    border-width: 1px;
+  }
+
+  .message {
+    @apply rounded-lg border-2 px-4 py-2
+  }
+  .error-message {
+    @apply    message
+            text-stone-50            bg-red-600                border-red-800
+            dark:text-red-700        dark:bg-stone-800         dark:border-red-800
+  }
+  .success-message {
+    @apply    message
+            text-stone-50            bg-lime-600               border-lime-800
+            dark:text-lime-500       dark:bg-stone-800         dark:border-lime-600
   }
 
   .caption-side-bottom {

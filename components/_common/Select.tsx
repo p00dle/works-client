@@ -51,7 +51,7 @@ export function SelectItem<T>({item, onSelect}: SelectItemProps<T>): JSX.Element
 
   return (
     <li className="" >
-      <div className={"hover:bg-sky-300 p-1" + arrowClass} onClick={onClick}>{label}</div>
+      <div className={"secondary-hover p-1" + arrowClass} onClick={onClick}>{label}</div>
       { Array.isArray(subMenu) && !collapsed
         ? (
           <ul className="">
@@ -63,7 +63,7 @@ export function SelectItem<T>({item, onSelect}: SelectItemProps<T>): JSX.Element
   );
 }
 
-export function Select<T>({value, onChange, pool, disabled = false, name, className, id}: SelectProps<T>): JSX.Element {
+export function Select<T>({value, onChange, pool, disabled = false, name, className = '', id}: SelectProps<T>): JSX.Element {
   if (!Array.isArray(pool)) throw new Error('pool must be an array');
   const { shouldShow, show, hide, ref } = useHideOnClickOutside(false);
   const items = makeOptions(pool);
@@ -74,7 +74,7 @@ export function Select<T>({value, onChange, pool, disabled = false, name, classN
   const displayLabel = String(items.some(a => a.value !== undefined) ? (items.find(a => a.value === value) || {label: ''}).label : value);
   return (
     <div className={shouldShow ? 'arrow-up' : 'arrow-down'} ref={ref}>
-      <input readOnly className={className || "form-control"}  onClick={disabled ? undefined : (shouldShow ? hide : show)} value={displayLabel} disabled={disabled} name={name} id={id} />
+      <input readOnly className={"form-control " + className}  onClick={disabled ? undefined : (shouldShow ? hide : show)} value={displayLabel} disabled={disabled} name={name} id={id} />
       <ul className={"py-1 absolute w-full secondary border-2 rounded-md z-[4] select-none max-h-72 overflow-x-auto " + (shouldShow ? "block" : "hidden")} >
         { items.map(item => <SelectItem item={item} key={item.label} onSelect={onSelect} />) }
       </ul>

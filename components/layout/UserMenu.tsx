@@ -12,7 +12,7 @@ export const UserMenu: React.FC = function UserMenu() {
   const user = userState.data || { role: '', fullName: '' };
   return (
     <div ref={ref}>
-      <div className="rounded-full sidebar text-3xl h-12 w-12 flex items-center justify-center cursor-pointer hover:bg-emerald-600 transition-all" onClick={show}><Icon icon="user" /></div>
+      <div className="rounded-full sidebar text-3xl h-12 w-12 flex items-center justify-center cursor-pointer sidebar-hover transition-all" onClick={show}><Icon icon="user" /></div>
       <dialog className={"z-[3] absolute left-[calc(100vw_-_21rem)] top-20 border-2 secondary rounded-lg w-[20rem] m-0 " + (shouldShow ? "block" : "hidden")}>
         <div className="flex flex-row-reverse text-xl pr-2 pt-1 cursor-pointer"><div onClick={hide}>&#10006;</div></div>
         <div className="flex">

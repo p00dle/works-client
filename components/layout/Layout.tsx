@@ -28,8 +28,7 @@ export const Layout: React.FC = function Layout() {
           z-[1]
         ">
           <Header className="
-            bg-emerald-300
-            dark:bg-slate-500
+            header
             shadow-lg
             px-4
             h-[4rem]

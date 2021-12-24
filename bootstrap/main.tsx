@@ -7,7 +7,6 @@ import { RouterProvider } from '~/bootstrap/router';
 
 import { ReactQueryDevtools } from 'react-query/devtools';
 
-import '~/bootstrap/css-imports';
 import { ModalProvider } from '~/components/layout/Modal';
 
 const queryClient = new QueryClient()

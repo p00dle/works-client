@@ -95,6 +95,10 @@ export const Home: React.FC = function Home() {
         <Button onClick={showConfirm}>CONFIRM</Button>
       </Section>
 
+      <Section title="MESSAGES" className="p-4 space-y-4">
+        <div className="error-message">Something bad happened, good luck next time</div>
+        <div className="success-message">Somehow you managed not to screw things up!</div>
+      </Section>
     </div>
   );
 }

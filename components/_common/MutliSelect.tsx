@@ -35,7 +35,7 @@ function getListItems(selectedItems: string[], pool: string[]): ListItem[] {
   return output;
 }
 
-export const MultiSelect: React.FC<MultiSelectProps> = function MultiSelect({value, onChange, pool, className}) {
+export const MultiSelect: React.FC<MultiSelectProps> = function MultiSelect({value, onChange, pool, className = ''}) {
   if (!Array.isArray(pool)) throw new Error('pool must be an array');
   const {ref, shouldShow, show, hide} = useHideOnClickOutside(false);
   const [currentlySelected, setCurrentlySelected] = useState(value);
@@ -72,24 +72,24 @@ export const MultiSelect: React.FC<MultiSelectProps> = function MultiSelect({val
    
   return (
     <div className={shouldShow ? 'arrow-up' : 'arrow-down'} ref={ref}>
-      <input readOnly className={className || "form-control"} onClick={shouldShow ? hide : show} value={inputValue} />
+      <input readOnly className={"form-control " + className} onClick={shouldShow ? hide : show} value={inputValue} />
       <div className={"absolute secondary border-2 rounded-md z-[4] w-full select-none " + (shouldShow ? "block" : "hidden")}>
         <ul className="block overflow-x-auto max-h-72 font-normal">
-          <li className="flex p-1 space-x-2 cursor-pointer hover:bg-sky-300"
+          <li className="flex p-1 space-x-2 cursor-pointer secondary-hover"
             key="___Select All" onClick={() => allSelected ? setCurrentlySelected([]) : setCurrentlySelected(pool)}>
             <div>{allSelected ? selectedIcon() : notSelectedIcon() }</div>
             <div>Select All</div>
           </li>
           {listItems.map(item =>
-            <li className="flex p-1 space-x-2 cursor-pointer hover:bg-sky-300" key={item.value} onClick={selectFactory(item)}>
+            <li className="flex p-1 space-x-2 cursor-pointer secondary-hover" key={item.value} onClick={selectFactory(item)}>
               <div>{item.selected ? selectedIcon() : notSelectedIcon() }</div>
               <div>{item.value}</div>
             </li>
           )}
         </ul>
         <div className="primary flex border-t-2 rounded-b-md">
-          <button className="block grow border-r-2 border-stone-400 hover:bg-sky-300" onClick={onClickSelect}>Select</button>
-          <button className="block grow hover:bg-sky-300" onClick={onClickCancel}>Cancel</button>
+          <button className="block grow border-r-2 secondary-hover" onClick={onClickSelect}>Select</button>
+          <button className="block grow secondary-hover" onClick={onClickCancel}>Cancel</button>
         </div>
       </div>
     </div>
