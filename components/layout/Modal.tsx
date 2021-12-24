@@ -77,7 +77,6 @@ export function useModal<T>(title: string | null, component: ModalComponent<Moda
         : updatedProps 
           ? updatedProps 
           : props;
-    console.log({updatedProps, props, modalProps});
     showModal(title, component, modalProps, modalClassName);
   }
 }
@@ -105,7 +104,6 @@ export const ModalProvider: React.FC = function ModalProvider({children}) {
 
 export const Modal: React.FC = function Modal() {
   const { component: Component, shouldShow, modalProps, hideModal, title, modalClassName } = useContext(ModalContext);
-  console.log({modalClassName});
   return (
     <React.Fragment>
       <dialog className={"absolute h-screen opacity-30 dark:opacity-50 bg-black w-screen top-0 left-0 z-30 " + (shouldShow ? "block": "hidden") } onClick={hideModal} />

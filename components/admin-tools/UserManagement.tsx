@@ -15,11 +15,11 @@ import { useInfoModal } from '~/components/_common/InfoModal';
 
 const EditUserModal: React.FC<{props: User}> = function EditUserModal({props: user}) {
   const updateUser = useUpdateUser();
-  const showInfoModal = useInfoModal();
+  const showModal = useInfoModal();
   function onSubmit(user: User) {
     updateUser.mutate(user, {
-      onSuccess: () => showInfoModal({type: 'success', text: `User ${user.username} updated successfully`}),
-      onError: (error) => showInfoModal({type: 'error', text: `Error updating user ${user.username}: ${String(error)}`})
+      onSuccess: () => showModal({type: 'success', text: `User ${user.username} updated successfully`}),
+      onError: (error) => showModal({type: 'error', text: `Error updating user ${user.username}: ${String(error)}`})
     })
   }
   return (
@@ -45,11 +45,11 @@ const EditUser: React.FC<{user: User}> = function EditUser({user}) {
 
 const DeleteUser: React.FC<{user: User}> = function DeleteUser({user}) {
   const removeUser = useRemoveUser();
-  const showInfoModal = useInfoModal();
+  const showModal = useInfoModal();
   const openModal = useConfirmModal(`Are you sure you want to remove user ${user.username}?`, () => {
     removeUser.mutate({username: user.username}, {
-      onSuccess: () => showInfoModal({type: 'success', text: `User ${user.username} removed successfully`}),
-      onError: (error) => showInfoModal({type: 'error', text: `Error deleting user ${user.username}: ${String(error)}`})
+      onSuccess: () => showModal({type: 'success', text: `User ${user.username} removed successfully`}),
+      onError: (error) => showModal({type: 'error', text: `Error deleting user ${user.username}: ${String(error)}`})
     });
   });
   return <Button onClick={openModal} className="text-sm">
@@ -60,6 +60,13 @@ const DeleteUser: React.FC<{user: User}> = function DeleteUser({user}) {
 export const UserManagement: React.FC = function UserManagement() {
   const usersState = useUsers();
   const createUser = useCreateUser();
+  const showModal = useInfoModal();
+  function onUserCreate(user: User) {
+    createUser.mutate(user, {
+      onSuccess: () => showModal({type: 'success', text: `User ${user.username} created successfully` }),
+      onError: (error) => showModal({type: 'error', text: `Error creating user: ${String(error)}`})
+    })
+  }
   const tableColumns: TableColumns<User> = [
     {prop: 'username', header: 'ID', filter: 'search' },
     {prop: 'fullName', header: 'FULL NAME', filter: 'search' },
@@ -76,7 +83,7 @@ export const UserManagement: React.FC = function UserManagement() {
         {usersState.data ? <Table data={usersState.data} columns={tableColumns} /> : null }
       </Section>
       <Section title="CREATE" sectionClassName="w-96" className="p-4">
-        <Form onSubmit={(user: User) => createUser.mutate(user)}>
+        <Form onSubmit={onUserCreate}>
           <Input type="string" prop="username" />
           <Input type="enum" prop="role" values={userRoles} />
           <Input type="email" prop="email" />
