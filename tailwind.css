@@ -2,41 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'CiscoSans Regular';
-  src:
-    url('./fonts/CiscoSansTTRegular.woff2') format('woff2'), 
-    url('./fonts/CiscoSansTTRegular.woff') format('woff');
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: 'CiscoSans Thin';
-  src: 
-    url('./fonts/CiscoSansTTThin.woff') format('woff'),
-    url('./fonts/CiscoSansTTThin.woff2') format('woff2');
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: 'CiscoSans Light';
-  src: 
-    url('./fonts/CiscoSansTTLight.woff') format('woff'),
-    url('./fonts/CiscoSansTTLight.woff2') format('woff2');
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: 'CiscoSans Bold';
-  src: 
-    url('./fonts/CiscoSansTTBold.woff') format('woff'),
-    url('./fonts/CiscoSansTTBold.woff2') format('woff2');
-  font-weight: normal;
-}
-
 @layer base {
   html {
-    font-family: 'CiscoSans Regular', sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 16px;
     box-sizing: content-box;
   }
@@ -78,7 +46,6 @@
 
   .react-datepicker {
     @apply rounded-b-none secondary;
-    font-family: 'CiscoSans Regular', sans-serif;
     font-weight: normal;
     box-sizing: content-box;
   }
@@ -138,10 +105,12 @@
   .row-odd {
     @apply  text-stone-700            bg-stone-200            border-stone-300
             dark:text-emerald-400     dark:bg-stone-700       dark:border-stone-500
+            secondary-hover
   }
   .row-even {
     @apply  text-stone-700            bg-stone-100            border-stone-300
             dark:text-emerald-400     dark:bg-stone-800       dark:border-stone-500
+            secondary-hover
   }
 
   .btn {
