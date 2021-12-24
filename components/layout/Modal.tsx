@@ -98,14 +98,14 @@ export const Modal: React.FC = function Modal() {
   return (
     <React.Fragment>
       <dialog className={"absolute h-screen opacity-30 bg-black w-screen top-0 left-0 z-30 " + (shouldShow ? "block": "hidden") } onClick={hideModal} />
-      <dialog className={"z-40 absolute top-[20vh] mx-auto left-0 right-0 rounded-lg p-0 border-2 " + (shouldShow ? "block": "hidden")} >
+      <dialog className={"z-40 absolute top-[20vh] mx-auto left-0 right-0 rounded-lg p-0 border-2 primary border-inherit " + (shouldShow ? "block": "hidden")} >
         <title className="tertiary text-lg p-4 rounded-t-sm flex">
           <span className="grow" >{title}</span>
           <div className="text-2xl cursor-pointer" onClick={hideModal}>
             <Icon icon="window-close" />
           </div>
         </title>
-        <div className="p-4 primary rounded-b-lg">
+        <div className="p-4 rounded-b-lg">
           {Component !== null ? <Component props={modalProps} hideModal={hideModal}  /> : null}
         </div>
       </dialog>

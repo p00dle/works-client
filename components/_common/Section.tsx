@@ -82,7 +82,7 @@ const SectionControl: React.FC<SectionControlProps> = function SectionControl({v
 
 export const Section = function Section<T extends Record<string, any>>({title, controls, children, className = '', state, setters, sectionClassName = '', exportData }: SectionProps<T>): JSX.Element {
   return (
-    <section className={"secondary border-2 rounded-xl border-inherit" + sectionClassName} >
+    <section className={"secondary border-2 rounded-xl border-inherit shadow-[3px_3px_3px_2px_#666666] dark:shadow-none " + sectionClassName} >
       {title || controls 
         ? <title className={"flex items-center border-b-2 border-inherit px-2 space-x-4 " + (controls ? "h-24" : "h-16")} >
             { title ? <div className="text-xl grow">{title}</div> : null }

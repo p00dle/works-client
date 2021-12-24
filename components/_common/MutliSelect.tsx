@@ -73,7 +73,7 @@ export const MultiSelect: React.FC<MultiSelectProps> = function MultiSelect({val
   return (
     <div className={shouldShow ? 'arrow-up' : 'arrow-down'} ref={ref}>
       <input readOnly className={"form-control " + className} onClick={shouldShow ? hide : show} value={inputValue} />
-      <div className={"absolute secondary border-2 rounded-md z-[4] w-full select-none " + (shouldShow ? "block" : "hidden")}>
+      <div className={"absolute secondary border-2 rounded-md z-[4] select-none min-w-full " + (shouldShow ? "block" : "hidden")}>
         <ul className="block overflow-x-auto max-h-72 font-normal">
           <li className="flex p-1 space-x-2 cursor-pointer secondary-hover"
             key="___Select All" onClick={() => allSelected ? setCurrentlySelected([]) : setCurrentlySelected(pool)}>
@@ -88,8 +88,8 @@ export const MultiSelect: React.FC<MultiSelectProps> = function MultiSelect({val
           )}
         </ul>
         <div className="primary flex border-t-2 rounded-b-md">
-          <button className="block grow border-r-2 secondary-hover" onClick={onClickSelect}>Select</button>
-          <button className="block grow secondary-hover" onClick={onClickCancel}>Cancel</button>
+          <button className="block grow border-r-2 border-inherit secondary-hover px-2" onClick={onClickSelect}>SELECT</button>
+          <button className="block grow secondary-hover px-2" onClick={onClickCancel}>CANCEL</button>
         </div>
       </div>
     </div>

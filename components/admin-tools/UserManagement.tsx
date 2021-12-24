@@ -28,7 +28,7 @@ const EditUserModal: React.FC<{props: User}> = function EditUserModal({props: us
 
 const EditUser: React.FC<{user: User}> = function EditUser({user}) {
   const openModal = useModal('EDIT USER', EditUserModal, user)
-  return <Button onClick={openModal}>
+  return <Button onClick={openModal} className="text-sm">
     <Icon icon="edit" />
   </Button>
 }
@@ -38,7 +38,7 @@ const DeleteUser: React.FC<{user: User}> = function DeleteUser({user}) {
   const openModal = useConfirmModal(`Are you sure you want to remove user ${user.username}?`, () => {
     removeUser.mutate({username: user.username});
   });
-  return <Button onClick={openModal}>
+  return <Button onClick={openModal} className="text-sm">
     <Icon icon="trash-alt" />
   </Button>
 }
