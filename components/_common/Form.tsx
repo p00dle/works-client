@@ -207,7 +207,6 @@ export const Form: React.FC<FormProps> = function Form({onSubmit, children, clas
     onSubmit(state);
   }
   const onChangeFactory = (prop: string) => (val: any) => setState({...state, [prop]: val});
-
   return (
     <form className={className || "grid grid-cols-2 space-y-2 relative"} onSubmit={onFormSubmit} >
       {(inputs.filter(i => i.props.type !== 'hidden') as NonHiddenInputElement[]).map(({props}) => (
@@ -219,7 +218,7 @@ export const Form: React.FC<FormProps> = function Form({onSubmit, children, clas
           : [
             <label key={props.prop + '-label'} className="pr-4 flex flex-row-reverse items-center" htmlFor={uid + props.prop} >
               {props.hint ? <HoverHint text={props.hint} /> : null}
-              <span>{props.label || props.prop ? format.string.camelCaseToUpperCase(props.prop) : null}</span>
+              <span>{props.label || (props.prop ? format.string.camelCaseToUpperCase(props.prop) : null)}</span>
             </label>,
             <Input key={props.prop + '-input'} {...props} _value={state[props.prop]} _onChange={onChangeFactory(props.prop)} _formUid={uid} />
             ]
