@@ -13,8 +13,8 @@ function noOp(): void {
 }
 
 export interface TableProps<T> {
-  data: T[];
-  columns: TableColumn<T, keyof T>[];
+  data: T[] | readonly T[];
+  columns: TableColumn<T, keyof T>[] | readonly TableColumn<T, keyof T>[];
   classes?: {
     table?: string;
     header?: string;
@@ -36,7 +36,7 @@ export interface TableProps<T> {
     prop: keyof T;
     asc?: boolean;
   };
-  onFilter?: (filtered: T[]) => any;
+  onFilter?: (filtered: T[] | readonly T[]) => any;
   onRowClick?: (row: T) => any;
 }
 
@@ -52,10 +52,10 @@ interface TableColumn<T, P extends keyof T = keyof T> {
   width?: number | string;
 }
 
-export type TableColumns<T> = TableColumn<T>[];
+export type TableColumns<T> = TableColumn<T>[] | readonly TableColumn<T>[];
 
 interface TransformedTableProps {
-  data: any[];
+  data: any[] | readonly any[];
   columns: TransformedTableColumn[];
   headers: TransformedTableHeader[];
   classes: {
@@ -80,7 +80,7 @@ interface TransformedTableProps {
   initialPropSelectedAndPool: Record<any, {selected: any[], pool: any[]}>;
   initialPropSearch: Record<any, string>;
   initialDateFilters: Record<any, [number | null, number | null]>;
-  onFilter?: (filtered: any[]) => any;
+  onFilter?: (filtered: any[] | readonly any[]) => any;
 }
 
 interface TransformedTableColumn {
@@ -200,7 +200,7 @@ interface AppliedFilter {
   dates?: [number | null, number | null];
 }
 
-function sortData<T, P extends keyof T>(prop: P, data: T[], asc?: boolean): T[] {
+function sortData<T, P extends keyof T>(prop: P, data: T[] | readonly T[], asc?: boolean): T[] {
   const sorter = asc ? (a: T, b: T) => a[prop] > b[prop] ? 1 : -1 : (a: T, b: T) => a[prop] > b[prop] ? -1 : 1;
   return data.slice(0).sort(sorter);
 }

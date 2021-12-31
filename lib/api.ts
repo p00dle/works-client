@@ -1,14 +1,26 @@
-import type { AxiosRequestConfig, Method } from 'axios';
+import type { Method, AxiosInstance } from 'axios';
 import type { HttpApiParser } from '~/types/api';
-import axios from 'axios';
+
 
 interface ProgressEvent {
   loaded: number;
   total: number;
 }
 
+type AxiosInstanceLike = {
+  request: (params: {method: Method, url: string, data?: any}) => any;
+  defaults: {
+    onDownloadProgress?: any,
+    onUploadProgress?: any,
+  },
+  interceptors: {
+    response: { use: (fn: (config: any) => any, fn2: (...args: any[]) => any) => any },
+    request: { use: (fn: (config: any) => any, fn2: (...args: any[]) => any) => any }
+  }
+
+}
 interface ApiFactoryParams {
-  axiosConfig: AxiosRequestConfig;
+  axiosInstance: AxiosInstanceLike;
   onRequest?: (requestCount: number) => any;
   onRequestError?: (err: unknown) => any;
   onUpdate?: (loaded: number, total: number) => any;
@@ -66,8 +78,7 @@ function getUrl(route: string, params: any, isGet: boolean): string {
 
 const noOp = () => void 0;
 
-export function apiFactory<T extends HttpApiParser<any>>({axiosConfig, onRequest = noOp, onRequestError = noOp, onUpdate = noOp, onResponse = noOp, onResponseError = noOp }: ApiFactoryParams ): Api<T> {
-  const axiosInstance = axios.create(axiosConfig);
+export function apiFactory<T extends HttpApiParser<any>>({axiosInstance, onRequest = noOp, onRequestError = noOp, onUpdate = noOp, onResponse = noOp, onResponseError = noOp }: ApiFactoryParams ): Api<T> {
   let requestsCount = 0;
 
   axiosInstance.interceptors.request.use(config => {

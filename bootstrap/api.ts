@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from 'axios';
-import { apiMock } from '~/bootstrap/api-mock';
+import { mockAxiosInstance } from '~/bootstrap/api-mock';
 import { apiFactory } from '~/lib/api';
+import axios from 'axios';
 
 const noOp = () => void 0;
 
@@ -8,12 +9,8 @@ const axiosConfig: AxiosRequestConfig = {
 
 }
 
-
-
-export const api = process.env.NODE_ENV === 'development' 
-  ? apiMock
-  : apiFactory({
-  axiosConfig,
+export const api = apiFactory({
+  axiosInstance: process.env.NODE_ENV === 'development' ? mockAxiosInstance : axios.create(axiosConfig),
   onRequest: noOp,
   onRequestError: noOp,
   onResponse: noOp,

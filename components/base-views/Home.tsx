@@ -88,7 +88,7 @@ export const Home: React.FC = function Home() {
       </Section>
 
       <Section title="FILE UPLOAD" className="p-8">
-        <FileUpload apiRoute="" title="File Upload Title" />
+        <FileUpload apiRoute="/users/create-many" title="File Upload Title" />
       </Section>
 
       <Section title="MODALS" className="p-4 space-x-4">

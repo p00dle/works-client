@@ -3,10 +3,12 @@ import { useState, useReducer, useRef } from 'react';
 import { api } from '~/bootstrap/api';
 import { Button } from '~/components/_common/Button';
 
-interface FileUploadProps {
-  apiRoute: string;
+import { HttpPostApi } from '@server';
+
+interface FileUploadProps<R extends keyof HttpPostApi> {
+  apiRoute: R;
   title: string;
-  transformPayload?: (file: Buffer) => any;
+  transformPayload?: (file: Buffer) => HttpPostApi[R]['payload'];
   messages?: Record<FileUploadStatus, string>;
 }
 
@@ -62,7 +64,7 @@ function fileUploadReducer(state: FileUploadState, action: FileUploadAction): Fi
   }
 }
 
-export const FileUpload: React.FC<FileUploadProps> = function FileUpload({title, apiRoute, transformPayload, messages = defaultMessages}) {
+export function FileUpload<R extends keyof HttpPostApi>({title, apiRoute, transformPayload, messages = defaultMessages}: FileUploadProps<R>) {
   const [state, dispatch] = useReducer(fileUploadReducer, {...initialState, messages, message: messages.idle});
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const disableSubmit = !(state.status === 'ready' || state.status === 'done' || state.status === 'error');
@@ -106,8 +108,8 @@ export const FileUpload: React.FC<FileUploadProps> = function FileUpload({title,
   async function onSubmit() {
     updateStatus('uploading');
     try {
-      const response = await api.request('POST', apiRoute, undefined, state.payload);
-      updateStatus('done', response);
+      const response = await api.post(apiRoute, {}, state.payload);
+      updateStatus('done', response as string);
     } catch (err) {
       updateStatus('error', String(err));
     }

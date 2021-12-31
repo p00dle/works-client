@@ -28,27 +28,26 @@ const mockData = {
   }
 }
 
-
 const SHOULD_SHOW_DEBUG = true;
 
-function getMockData(method: string, route: string) {
-  if (SHOULD_SHOW_DEBUG) {
-    console.debug(`API MOCK [${method}] [${route}]`);
-  } 
-  const methodData = mockData[method as keyof typeof mockData];
-  if (!methodData) throw Error(`Method not defined: [${method}]`);
-  const data = methodData[route as keyof typeof methodData];
-  if (typeof data === undefined) throw Error(`Mock data not defined for [${method}] [${route}]`);
-  return data;
-}
-
-export const apiMock = {
-  factory: (method: string, route: string) => {
-    return async function () {
-      return getMockData(method, route);
-    }
+export const mockAxiosInstance = {
+  request: async ({method, url}: {method: string, url: string}) => {
+    const route = typeof url === 'string' ? url.replace(/^\/api/, '') : url;
+    if (SHOULD_SHOW_DEBUG) {
+      console.debug(`API MOCK [${method}] [${route}]`);
+    } 
+    const methodData = mockData[method as keyof typeof mockData];
+    if (!methodData) throw Error(`Method not defined: [${method}]`);
+    const data = methodData[route as keyof typeof methodData];
+    if (typeof data === undefined) throw Error(`Mock data not defined for [${method}] [${route}]`);
+    return data;
   },
-  request: async (method: string, route: string) => {
-    return getMockData(method, route);
+  defaults: {
+    onDownloadProgress: null,
+    onUploadProgress: null,
+  },
+  interceptors: {
+    request: { use: () => void 0 },
+    response: { use: () => void 0 },
   }
 }
