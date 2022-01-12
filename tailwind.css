@@ -66,19 +66,21 @@
 
 @layer utilities {
   .sidebar {
-    @apply  text-emerald-50           bg-emerald-700          border-emerald-600
+    @apply  text-slate-50             bg-slate-700            border-slate-600
+            stroke-slate-50           fill-slate-50
             dark:text-emerald-500     dark:bg-stone-700       dark:border-stone-500
+            dark:stroke-emerald-500   dark:fill-emerald-500
   }
   .header {
-    @apply                              bg-emerald-300
+    @apply                              bg-slate-300
                                         dark:bg-stone-600
   }
   .sidebar-hover {
-    @apply                              hover:bg-emerald-600
+    @apply                              hover:bg-slate-600
                                         dark:hover:bg-stone-500
   }
   .sidebar-active {
-    @apply  text-white                bg-emerald-500
+    @apply  text-white                bg-slate-500
             dark:text-emerald-300     dark:bg-stone-600
   }
   .primary {
