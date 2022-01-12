@@ -7,7 +7,10 @@
   "license": "UNLICENSED",
   "private": true,
   "devDependencies": {
+    "@faker-js/faker": "^5.5.3",
     "@fortawesome/fontawesome-common-types": "^0.2.36",
+    "@lukeed/uuid": "^2.0.0",
+    "@types/faker": "^5.5.9",
     "@types/file-saver": "^2.0.4",
     "@types/node": "^16.11.12",
     "@types/react": "^17.0.37",
