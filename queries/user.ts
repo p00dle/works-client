@@ -24,7 +24,6 @@ export function useUpdateUser() {
   });
 }
 
-
 export function useRemoveUser() {
   const queryClient = useQueryClient();
   return useMutation((query: {username: string}) => api.request('POST', '/users/delete', query), {

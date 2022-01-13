@@ -46,8 +46,13 @@ export class WebSocketSub<T extends WsApiParser<any>> {
     this.socket = this.websocketFactory();
     this.initSocket();
   }
-  public send<C extends keyof T>(channel: C, subscribe: boolean, query: T[C]['query'] | null) {
+  private sendSubscription<C extends keyof T>(channel: C, subscribe: boolean, query: T[C]['query'] | null) {
     const messageStr = JSON.stringify({channel, subscribe, query});
+    if (this.isConnected) this.socket.send(messageStr);
+    else this.messageQueue.push(messageStr);
+  }
+  public send(channel: string, payload: any) {
+    const messageStr = JSON.stringify({channel, payload});
     if (this.isConnected) this.socket.send(messageStr);
     else this.messageQueue.push(messageStr);
   }
@@ -56,7 +61,7 @@ export class WebSocketSub<T extends WsApiParser<any>> {
     if (!this.listeners[channelStr]) this.listeners[channelStr] = [];
     this.listeners[channelStr]?.push(listener);
     if (!this.subscribedToChannelCounts[channelStr])  {
-      this.send(channel, true, query);
+      this.sendSubscription(channel, true, query);
       this.subscribedToChannelCounts[channelStr] = 1;
     } else {
       (this.subscribedToChannelCounts[channelStr] as number)++;
@@ -74,7 +79,7 @@ export class WebSocketSub<T extends WsApiParser<any>> {
           (this.subscribedToChannelCounts[channelStr] as number)--;
         }
         if (!this.subscribedToChannelCounts[channelStr]) {
-          this.send(channel, false, null);
+          this.sendSubscription(channel, false, null);
         }
       } 
     }

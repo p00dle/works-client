@@ -141,6 +141,7 @@ export const routerFactory = <T extends Routes>({window, routes, errorPages, hom
       if (homePath && state.route === '/') dispatch({type: 'update-route', payload: {route: homePath as string}})
     }, [state.route])
     window.addEventListener('popstate', () => {
+      console.log('well this one fires');
       dispatch({type: 'on-popstate'});
     });
     useEffect(() => {

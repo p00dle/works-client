@@ -12,12 +12,13 @@ const mockData = {
   }
 }
 
-const SHOULD_SHOW_DEBUG = true;
+// const SHOULD_LOG = true;
+const SHOULD_LOG = false;
 
 export const mockAxiosInstance = {
   request: async ({method, url}: {method: string, url: string}) => {
     const route = typeof url === 'string' ? url.replace(/^\/api/, '') : url;
-    if (SHOULD_SHOW_DEBUG) {
+    if (SHOULD_LOG) {
       console.debug(`API MOCK [${method}] [${route}]`);
     } 
     const methodData = mockData[method as keyof typeof mockData];

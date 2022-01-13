@@ -54,7 +54,6 @@ export const Home: React.FC = function Home() {
   const showError = useInfoModal('Something bad happened, good luck next time', 'error');
   const showSuccess = useInfoModal('Somehow you managed not to screw things up!', 'success');
   const showConfirm = useConfirmModal('When clicked the listener in next argument will fire', () => console.log('Confirmed'));
-
   return (
     <div className="grid grid-cols-3 gap-12 p-8">
 

@@ -72,3 +72,15 @@ export function getUniqueValuesByProp<T, P extends keyof T>(prop: P, data: T[]):
   for (const row of data) propSet.add(row[prop]);
   return Array.from(propSet.values());
 }
+
+export function areDictonariesEqual(dict1: Record<string, string>, dict2: Record<string, string>): boolean {
+  if (typeof dict1 !== 'object' || dict1 === null || typeof dict2 !== 'object' || dict2 === null) return false;
+  const keys1 = Object.keys(dict1);
+  const keys2 = Object.keys(dict2);
+  if (keys1.length === 0 && keys2.length === 0) return true;
+  if (keys1.length !== keys2.length) return false;
+  for (const prop of keys1) {
+    if (dict1[prop] !== dict2[prop]) return false;
+  }
+  return true;
+}
